@@ -1,10 +1,13 @@
 package se.lexicon;
 
 
-public class App 
+import se.lexicon.dao.CityDao;
+
+public class App
 {
     public static void main( String[] args ) {
 
+        CityDaoJDBC.mySqlConnection();
 
     }
 }
