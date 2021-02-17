@@ -77,12 +77,54 @@ public class CityDaoJDBC implements CityDao {
 
     @Override
     public List<City> findByName(String name) {
-        return null;
+        Connection connection = mySqlConnection();
+        String query = "select * from city where name=?";
+        List <City> cityList = new ArrayList<>();
+        try(
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ) {
+            preparedStatement.setString(1, name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                cityList.add(new City(
+                        resultSet.getInt(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getInt(5)
+
+                ));
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cityList;
     }
 
     @Override
     public List<City> findAll() {
-        return null;
+        Connection connection = mySqlConnection();
+        String query = "select * from city";
+        List <City> cityList = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                cityList.add(new City(
+                        resultSet.getInt(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getInt(5)
+
+                ));
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cityList;
     }
 
     @Override

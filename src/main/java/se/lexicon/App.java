@@ -22,6 +22,19 @@ public class App
 
         System.out.println("----------------------------------");
 
+        List<City> findByName = cityDao.findByName("Amsterdam");
+        findByName.forEach(System.out::println);
+
+        System.out.println("----------------------------------");
+
+        List<City> findAll = cityDao.findAll();
+        findAll.forEach(System.out::println);
+
+
+
+
+
+
 
     }
 }
