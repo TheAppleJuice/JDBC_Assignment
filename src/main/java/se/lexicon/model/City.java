@@ -3,15 +3,22 @@ package se.lexicon.model;
 public class City {
     private int id;
     private String name;
-    private int countrycode;
+    private String countrycode;
     private String district;
     private int population;
 
     public City() {
     }
 
-    public City(int id, String name, int countrycode, String district, int population) {
+    public City(int id, String name, String countrycode, String district, int population) {
         this.id = id;
+        this.name = name;
+        this.countrycode = countrycode;
+        this.district = district;
+        this.population = population;
+    }
+
+    public City(String name, String countrycode, String district, int population) {
         this.name = name;
         this.countrycode = countrycode;
         this.district = district;
@@ -34,11 +41,11 @@ public class City {
         this.name = name;
     }
 
-    public int getCountrycode() {
+    public String getCountrycode() {
         return countrycode;
     }
 
-    public void setCountrycode(int countrycode) {
+    public void setCountrycode(String countrycode) {
         this.countrycode = countrycode;
     }
 
