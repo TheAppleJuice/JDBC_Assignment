@@ -4,9 +4,7 @@ package se.lexicon;
 import se.lexicon.dao.CityDao;
 import se.lexicon.model.City;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 public class CityDaoJDBC implements CityDao {
@@ -23,7 +21,18 @@ public class CityDaoJDBC implements CityDao {
 
     @Override
     public City findById(int id) {
-        return null;
+        Connection connection = mySqlConnection();
+        String query = "select id,name from city where id=?";
+        City result = null;
+        try(
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setInt(1, id);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                ){} catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return result;
     }
 
     @Override
