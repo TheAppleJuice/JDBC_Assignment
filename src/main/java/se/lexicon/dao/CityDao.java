@@ -1,4 +1,4 @@
-package se.lexicon;
+package se.lexicon.dao;
 
 public interface CityDao {
 
