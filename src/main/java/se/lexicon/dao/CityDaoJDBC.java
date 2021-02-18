@@ -129,16 +129,78 @@ public class CityDaoJDBC implements CityDao {
 
     @Override
     public City add(City city) {
-        return null;
+        Connection connection = mySqlConnection();
+        String query = "insert into city (name, countryCode, district, population) values (?,?,?,?)";
+        try (
+                PreparedStatement preparedStatement = connection.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+        ) {
+            preparedStatement.setString(1, city.getName());
+            preparedStatement.setString(2, city.getCountrycode());
+            preparedStatement.setString(3, city.getDistrict());
+            preparedStatement.setInt(4, city.getPopulation());
+
+           int resultSet = preparedStatement.executeUpdate();
+            System.out.println((resultSet == 1) ? "New city added to database" : "City not added");
+            // get generated key from prepared statement
+            ResultSet rs= preparedStatement.getGeneratedKeys();
+            int idKey = 0;
+            while (rs.next()) {
+                idKey= rs.getInt(1);
+            }
+            // get from resultset
+            // set to city object + id variable
+            city.setId(idKey);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return city;
     }
 
     @Override
     public City update(City city) {
-        return null;
+        Connection connection = mySqlConnection();
+        String query = "update city set name=?, countrycode=?, district=?, population=? where id= ?";
+
+        try (
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ){
+            preparedStatement.setString(1, city.getName());
+            preparedStatement.setString(2, city.getCountrycode());
+            preparedStatement.setString(3, city.getDistrict());
+            preparedStatement.setInt(4, city.getPopulation());
+            preparedStatement.setInt(5, city.getId());
+
+            int resultSet = preparedStatement.executeUpdate();
+            System.out.println((resultSet == 1) ? "City updated to database" : "City not updated");
+            // get generated key from prepared statement
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return city;
     }
 
     @Override
     public int delete(City city) {
-        return 0;
+        Connection connection = mySqlConnection();
+        String query = "delete from city where id= ?";
+        try(
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                ){
+
+            preparedStatement.setInt(1, city.getId());
+            int resultSet = preparedStatement.executeUpdate();
+            System.out.println((resultSet == 1) ? "City deleted from database" : "City not deleted");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return 1;
     }
 }
